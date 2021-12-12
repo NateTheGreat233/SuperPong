@@ -1,13 +1,30 @@
 package core;
 
+import display.Window;
+
 public class Manager 
 {
 
+	private static Manager manager;
 	private boolean shouldRun;
+	private Window window;
+	private int windowWidth;
+	private int windowHeight;
+	
+	public Manager()
+	{
+		if (manager == null)
+		{
+			windowWidth = Window.SCREEN_WIDTH*3/4;
+			windowHeight = Window.SCREEN_HEIGHT*3/4;
+			manager = this;
+		}
+	}
 	
 	public void startGame()
 	{
 		shouldRun = true;
+		window = new Window(windowWidth, windowHeight);
 		runGame();
 	}
 	
@@ -15,7 +32,8 @@ public class Manager
 	{
 		while (shouldRun)
 		{
-			
+			update();
+			render();
 		}
 		endGame();
 	}
@@ -25,9 +43,45 @@ public class Manager
 		System.exit(0);
 	}
 	
+	private void update()
+	{
+		try {
+			Thread.sleep(0);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void render()
+	{
+		window.getCurrentPanel().repaint();
+		window.getCurrentPanel().revalidate();
+	}
+	
 	public void setShouldRun(boolean b)
 	{
 		shouldRun = b;
+	}
+	
+	public Window getWindow()
+	{
+		return window;
+	}
+	
+	public int getWindowWidth()
+	{
+		return windowWidth;
+	}
+	
+	public int getWindowHeight()
+	{
+		return windowHeight;
+	}
+	
+	public static Manager getManager()
+	{
+		return manager;
 	}
 	
 }
