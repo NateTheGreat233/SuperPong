@@ -11,12 +11,19 @@ public class Manager
 	private int windowWidth;
 	private int windowHeight;
 	
+	private long lastTime;
+	private int targetFPS;
+	private long optimalTime;
+	
 	public Manager()
 	{
 		if (manager == null)
 		{
 			windowWidth = Window.SCREEN_WIDTH*3/4;
 			windowHeight = Window.SCREEN_HEIGHT*3/4;
+			targetFPS = 60;
+			optimalTime = 1000000000/targetFPS;
+			lastTime = 0;
 			manager = this;
 		}
 	}
@@ -32,7 +39,16 @@ public class Manager
 	{
 		while (shouldRun)
 		{
-			update();
+			if (lastTime == 0)
+			{
+				lastTime = System.nanoTime();
+			}
+			long currentTime = System.nanoTime();
+			long difference = (currentTime - lastTime);
+			lastTime = currentTime;
+			double delta = (double)difference/(double)optimalTime;
+			
+			update(delta);
 			render();
 		}
 		endGame();
@@ -43,14 +59,9 @@ public class Manager
 		System.exit(0);
 	}
 	
-	private void update()
+	private void update(double delta)
 	{
-		try {
-			Thread.sleep(0);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		window.getCurrentPanel().updateObjects(delta);
 	}
 	
 	private void render()

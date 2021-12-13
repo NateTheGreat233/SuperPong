@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 
 import core.Manager;
 import interfaces.Drawable;
+import interfaces.KeyAttentive;
+import interfaces.Updatable;
 
 public abstract class Panel extends JPanel 
 {
@@ -31,6 +33,8 @@ public abstract class Panel extends JPanel
 	
 	protected Manager manager;
 	protected ArrayList<Drawable> drawables;
+	protected ArrayList<KeyAttentive> keyAttentives;
+	protected ArrayList<Updatable> updatables;
 	
 	protected int windowWidth;
 	protected int windowHeight;
@@ -44,10 +48,29 @@ public abstract class Panel extends JPanel
 	public void paint(Graphics g)
 	{
 		super.paint(g);
+		revalidate();
 		for (Drawable drawable : drawables)
 		{
 			drawable.draw(g);
 		}
+	}
+	
+	public void updateObjects(double delta)
+	{
+		for (Updatable updatable : updatables)
+		{
+			updatable.update(delta);
+		}
+	}
+	
+	public ArrayList<Drawable> getDrawables()
+	{
+		return drawables;
+	}
+	
+	public ArrayList<KeyAttentive> getKeyAttentives()
+	{
+		return keyAttentives;
 	}
 	
 	public abstract String getName();
@@ -55,6 +78,8 @@ public abstract class Panel extends JPanel
 	protected void initializePanel()
 	{
 		drawables = new ArrayList<Drawable>();
+		keyAttentives = new ArrayList<KeyAttentive>();
+		updatables = new ArrayList<Updatable>();
 		manager = Manager.getManager();
 		windowWidth = Manager.getManager().getWindowWidth();
 		windowHeight = Manager.getManager().getWindowHeight();

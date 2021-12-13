@@ -20,6 +20,11 @@ public class MenuPanel extends Panel
 	private Color green;
 	private Color hoverColor;
 	private Color clickColor;
+	
+	private JLabel title;
+	private JButton startButton;
+	private JButton instructionsButton;
+	private JButton exitButton;
 
 	@Override
 	public void initializePanel() 
@@ -32,9 +37,9 @@ public class MenuPanel extends Panel
 		
 		//UIColor buttonColors = new UIColor(green, green, Color.black, new Color(43, 107, 61), new Color(43, 107, 61));
 		
-		JLabel title = createText("Super Pong", green, TITLE_FONT, SwingConstants.CENTER, SwingConstants.CENTER, 0.5, 0.1, 0.5, 0.35);
+		title = createText("Super Pong", green, TITLE_FONT, SwingConstants.CENTER, SwingConstants.CENTER, 0.5, 0.1, 0.5, 0.35);
 		
-		JButton startButton = createButton("Start", BUTTON_TEXT_FONT, green, Color.black, green, 0.5, 0.5, 0.25, 0.1, 0.25, 0.25);
+		startButton = createButton("Start", BUTTON_TEXT_FONT, green, Color.black, green, 0.5, 0.5, 0.25, 0.1, 0.25, 0.25);
 		startButton.addActionListener(new ActionListener() 
 		{ 
 			  public void actionPerformed(ActionEvent e) 
@@ -60,7 +65,7 @@ public class MenuPanel extends Panel
 		    }
 		});
 		
-		JButton instructionsButton = createButton("Instructions", BUTTON_TEXT_FONT, green, Color.black, green, 0.5, 0.65, 0.25, 0.1, 0.5, 0.5);
+		instructionsButton = createButton("Instructions", BUTTON_TEXT_FONT, green, Color.black, green, 0.5, 0.65, 0.25, 0.1, 0.5, 0.5);
 		instructionsButton.addActionListener(new ActionListener() 
 		{ 
 			  public void actionPerformed(ActionEvent e) 
@@ -86,7 +91,7 @@ public class MenuPanel extends Panel
 		    }
 		});
 		
-		JButton exitButton = createButton("Exit", BUTTON_TEXT_FONT, green, Color.black, green, 0.5, 0.8, 0.25, 0.1, 0.25, 0.25);
+		exitButton = createButton("Exit", BUTTON_TEXT_FONT, green, Color.black, green, 0.5, 0.8, 0.25, 0.1, 0.25, 0.25);
 		exitButton.addActionListener(new ActionListener() 
 		{ 
 			  public void actionPerformed(ActionEvent e) 
@@ -111,11 +116,23 @@ public class MenuPanel extends Panel
 		    	exitButton.setBackground(Color.BLACK);
 		    }
 		});
-		
+	}
+	
+	@Override
+	public void onEnter()
+	{
 		add(title);
 		add(startButton);
 		add(instructionsButton);
 		add(exitButton);
+	}
+	
+	public void onExit()
+	{
+		remove(title);
+		remove(startButton);
+		remove(instructionsButton);
+		remove(exitButton);
 	}
 
 	@Override

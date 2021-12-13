@@ -50,6 +50,10 @@ public class Window extends JFrame
 				currentPanel = p;
 				add(currentPanel);
 				currentPanel.onEnter();
+				
+				repaint();
+				revalidate();
+				
 				return;
 			}
 		}
