@@ -6,7 +6,8 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 
-public class Window extends JFrame {
+public class Window extends JFrame 
+{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -74,8 +75,9 @@ public class Window extends JFrame {
 		panels = new ArrayList<Panel>();
 		
 		MenuPanel menuPanel = new MenuPanel();
+		GamePanel gamePanel = new GamePanel();
 		
-		panels.addAll(Arrays.asList(menuPanel));
+		panels.addAll(Arrays.asList(menuPanel, gamePanel));
 		changePanel("menu");
 	}
 	

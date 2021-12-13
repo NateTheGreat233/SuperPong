@@ -17,7 +17,8 @@ import javax.swing.SwingConstants;
 import core.Manager;
 import interfaces.Drawable;
 
-public abstract class Panel extends JPanel {
+public abstract class Panel extends JPanel 
+{
 
 	private static final long serialVersionUID = 1L;
 	

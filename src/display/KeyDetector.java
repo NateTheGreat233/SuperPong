@@ -18,10 +18,6 @@ public class KeyDetector implements KeyListener
 	@Override
 	public void keyTyped(KeyEvent e) 
 	{
-		if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
-		{
-			manager.setShouldRun(false);
-		}
 	}
 
 	@Override
