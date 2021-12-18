@@ -32,6 +32,7 @@ public class Manager
 	{
 		shouldRun = true;
 		window = new Window(windowWidth, windowHeight);
+		window.initializePanels();
 		runGame();
 	}
 	
@@ -50,6 +51,7 @@ public class Manager
 			
 			update(delta);
 			render();
+			cleanUp();
 		}
 		endGame();
 	}
@@ -68,6 +70,11 @@ public class Manager
 	{
 		window.getCurrentPanel().repaint();
 		window.getCurrentPanel().revalidate();
+	}
+	
+	private void cleanUp()
+	{
+		window.getCurrentPanel().cleanUp();
 	}
 	
 	public void setShouldRun(boolean b)

@@ -8,8 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import UI.Button;
-import UI.UIColor;
 import core.Manager;
 
 public class MenuPanel extends Panel 

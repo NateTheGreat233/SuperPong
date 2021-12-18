@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -15,11 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import core.Manager;
+import interfaces.Collidable;
 import interfaces.Drawable;
 import interfaces.KeyAttentive;
 import interfaces.Updatable;
 
-public abstract class Panel extends JPanel 
+public abstract class Panel extends JPanel implements KeyAttentive
 {
 
 	private static final long serialVersionUID = 1L;
@@ -35,6 +37,9 @@ public abstract class Panel extends JPanel
 	protected ArrayList<Drawable> drawables;
 	protected ArrayList<KeyAttentive> keyAttentives;
 	protected ArrayList<Updatable> updatables;
+	protected ArrayList<Collidable> collidables;
+	protected ArrayList<Object> toRemove;
+	protected ArrayList<Object> toAdd;
 	
 	protected int windowWidth;
 	protected int windowHeight;
@@ -53,6 +58,20 @@ public abstract class Panel extends JPanel
 		{
 			drawable.draw(g);
 		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			Manager.getManager().setShouldRun(false);
+		}
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) 
+	{
 	}
 	
 	public void updateObjects(double delta)
@@ -80,6 +99,10 @@ public abstract class Panel extends JPanel
 		drawables = new ArrayList<Drawable>();
 		keyAttentives = new ArrayList<KeyAttentive>();
 		updatables = new ArrayList<Updatable>();
+		collidables = new ArrayList<Collidable>();
+		keyAttentives.add(this);
+		toRemove = new ArrayList<Object>();
+		toAdd = new ArrayList<Object>();
 		manager = Manager.getManager();
 		windowWidth = Manager.getManager().getWindowWidth();
 		windowHeight = Manager.getManager().getWindowHeight();
@@ -87,6 +110,51 @@ public abstract class Panel extends JPanel
 		setLayout(null);
 		repaint();
 		revalidate();
+	}
+	
+	public void cleanUp() 
+	{
+		for (Object o : toRemove)
+		{
+			if (drawables.contains(o))
+			{
+				drawables.remove(o);
+			}
+			if (updatables.contains(o))
+			{
+				updatables.remove(o);
+			}
+			if (keyAttentives.contains(o))
+			{
+				keyAttentives.remove(o);
+			}
+			if (collidables.contains(o))
+			{
+				collidables.remove(o);
+			}
+		}
+		toRemove.clear();
+		
+		for (Object o : toAdd)
+		{
+			if (o instanceof Drawable && !drawables.contains(o))
+			{
+				drawables.add((Drawable)o);
+			}
+			if (o instanceof Updatable && !updatables.contains(o))
+			{
+				updatables.add((Updatable)o);
+			}
+			if (o instanceof KeyAttentive && !keyAttentives.contains(o))
+			{
+				keyAttentives.add((KeyAttentive)o);
+			}
+			if (o instanceof Collidable && !collidables.contains(o))
+			{
+				collidables.add((Collidable)o);
+			}
+		}
+		toAdd.clear();
 	}
 	
 	protected void onEnter()

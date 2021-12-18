@@ -6,18 +6,15 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import core.Manager;
+import interfaces.Collidable;
 import interfaces.Drawable;
 import interfaces.KeyAttentive;
 import interfaces.Updatable;
 
-public abstract class Paddle extends Rectangle implements KeyAttentive, Drawable, Updatable 
+public abstract class Paddle extends Rectangle implements KeyAttentive, Drawable, Updatable, Collidable
 {
 
 	private static final long serialVersionUID = 1L;
-	
-	public static final int PLAYER_1 = 0;
-	public static final int PLAYER_2 = 1;
-	public static final int COMPUTER = 2;
 	
 	protected double yPos;
 	
@@ -28,11 +25,10 @@ public abstract class Paddle extends Rectangle implements KeyAttentive, Drawable
 	protected Color color;
 	protected int buffer;
 	
-	public Paddle(int type, int xPos, int yPos, int width, int height)
+	public Paddle(int xPos, int yPos, int width, int height)
 	{
 		super(xPos, yPos, width, height);
 		this.yPos = yPos;
-		this.type = type;
 		speed = 5;
 		color = new Color(69, 230, 114);
 		buffer = 5;
@@ -102,6 +98,18 @@ public abstract class Paddle extends Rectangle implements KeyAttentive, Drawable
 	public void draw(Graphics g) {
 		g.setColor(color);
 		g.fillRect((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
+	}
+	
+	@Override
+	public void onCollision(Collidable other)
+	{
+		
+	}
+	
+	@Override
+	public Rectangle getBounds()
+	{
+		return this;
 	}
 	
 }

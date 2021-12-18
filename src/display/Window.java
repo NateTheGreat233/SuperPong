@@ -32,8 +32,6 @@ public class Window extends JFrame
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		
-		initializePanels();
 	}
 	
 	public void changePanel(String name) 
@@ -74,7 +72,7 @@ public class Window extends JFrame
 		return currentPanel;
 	}
 	
-	private void initializePanels()
+	public void initializePanels()
 	{
 		panels = new ArrayList<Panel>();
 		
